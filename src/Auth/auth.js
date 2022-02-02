@@ -3,8 +3,10 @@ import {useState} from "react";
 import {Alert, Container, CssBaseline, Snackbar, Stack} from "@mui/material";
 
 import {Login} from "./login/login";
+import {View} from "../Components/View";
 
 const Auth = (props) => {
+    const [activePanel, setActivePanel] = useState('login')
 
     const [alert, setAlert] = useState({
         show: false,
@@ -30,13 +32,15 @@ const Auth = (props) => {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline>
-                <Login showAlert={showSnackBar} userData={props.userData}/>
+                <View activeView={activePanel}>
+                    <Login id="login" showAlert={showSnackBar} userData={props.userData}/>
 
-                <Stack spacing={2} sx={{width: '100%'}}>
-                    <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>
-                        {alert.msg}
-                    </Snackbar>
-                </Stack>
+                    <Stack spacing={2} sx={{width: '100%'}}>
+                        <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>
+                            {alert.msg}
+                        </Snackbar>
+                    </Stack>
+                </View>
             </CssBaseline>
         </Container>
     );
