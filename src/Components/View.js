@@ -1,12 +1,12 @@
 
 export const View = (props) => {
-    const childs = props.children
+    const childs = Array.isArray(props.children) ? props.children : [props.children]
+    console.log(childs)
     const activeView = props.activeView
 
     const renderComponents = [];
 
     for (let child of childs) {
-        console.log(child)
         if (child.props.id === activeView || child.props.id === undefined)
             renderComponents.push(child)
     }

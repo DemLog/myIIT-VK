@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Auth from "./Auth/auth";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {View} from "./Components/View";
 
 const App = () => {
     const [activeView, setActiveView] = useState('auth');
@@ -26,7 +27,9 @@ const App = () => {
 
     return (
         <ThemeProvider theme={tempTheme}>
-            <Auth userData={setUser}/>
+            <View activeView={activeView}>
+                <Auth id="auth" userData={setUser}/>
+            </View>
         </ThemeProvider>
     );
 }
