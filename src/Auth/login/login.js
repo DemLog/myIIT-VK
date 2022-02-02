@@ -1,7 +1,19 @@
-import logo from "../image/logo.png";
-import {Box, Button, IconButton, InputAdornment, Link, TextField, Typography} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useState} from "react";
+
+import {
+    Box,
+    Button,
+    IconButton,
+    InputAdornment,
+    Link,
+    TextField,
+    Typography
+} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+
+import { AuthUser, User } from 'myiit-api-lib'
+
+import logo from "../image/logo.png";
 
 export const Login = (props) => {
     const showAlert = props.showAlert;
@@ -22,16 +34,9 @@ export const Login = (props) => {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        if (errInput[name]) {
-            setErrInput(prevState => ({
-                ...prevState,
-                [name]: false
-            }));
-            setErrMessage(prevState => ({
-                ...prevState,
-                [name]: ''
-            }));
-        }
+        if (errInput[name])
+            displayErrorInput(name, '', false)
+
         changeInputData(prevState => ({
             ...prevState,
             [name]: value
@@ -48,8 +53,37 @@ export const Login = (props) => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        showAlert("Пока что не подключена библиотека", "warning");
+        if (!inputData.login)
+            displayErrorInput('login', 'Вы не ввели в поле логин!');
+        if (!inputData.password)
+            displayErrorInput('password', 'Вы не ввели в поле пароль!');
+
+        const authUser = new AuthUser(inputData.login, inputData.password);
+        authUser.loginUser()
+            .then((response) => {
+                if (!response.data) {
+                    let msg = '';
+                    response.err.error.forEach((item) => {
+                        msg += item + '\n';
+                    });
+                    return showAlert(msg, 'error');
+                }
+                showAlert('Вход выполнен успешно!', 'success');
+            })
+
+        props.userData(new User(authUser));
     };
+
+    const displayErrorInput = (name, msg, status=true) => {
+        setErrInput(prevState => ({
+            ...prevState,
+            [name]: status
+        }));
+        setErrMessage(prevState => ({
+            ...prevState,
+            [name]: msg
+        }));
+    }
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20%'}}>
@@ -79,9 +113,7 @@ export const Login = (props) => {
                     Войти
                 </Button>
             </Box>
-            <Link href="#" underline="none">Сбросить пароль</Link>
+            <Link href="#" underline="hover">Сбросить пароль</Link>
         </Box>
     );
 };
-
-export default Login;

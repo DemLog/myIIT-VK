@@ -1,16 +1,11 @@
 import {useState} from "react";
 
-import {
-    Alert,
-    Container,
-    CssBaseline,
-    Snackbar,
-    Stack,
-} from "@mui/material";
+import {Alert, Container, CssBaseline, Snackbar, Stack} from "@mui/material";
 
-import Login from "./login/login";
+import {Login} from "./login/login";
 
 const Auth = (props) => {
+
     const [alert, setAlert] = useState({
         show: false,
         msg: null
@@ -35,7 +30,7 @@ const Auth = (props) => {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline>
-                <Login showAlert={showSnackBar}/>
+                <Login showAlert={showSnackBar} userData={props.userData}/>
 
                 <Stack spacing={2} sx={{width: '100%'}}>
                     <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>

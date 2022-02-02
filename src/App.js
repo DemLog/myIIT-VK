@@ -7,6 +7,8 @@ const App = () => {
     const [themeUI, setThemeUI] = useState(null);
     const tempTheme = createTheme({palette: {mode: 'dark',},});
 
+    const [user, setUser] = useState(null);
+
     const changeTheme = (theme) => {
         setThemeUI(createTheme({
             palette: {
@@ -24,7 +26,7 @@ const App = () => {
 
     return (
         <ThemeProvider theme={tempTheme}>
-            <Auth/>
+            <Auth userData={setUser}/>
         </ThemeProvider>
     );
 }
