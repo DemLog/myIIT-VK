@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import {Alert, Container, CssBaseline, Snackbar, Stack} from "@mui/material";
+import {Alert, Container, Snackbar, Stack} from "@mui/material";
 
 import {Login} from "./login/login";
 import {View} from "../Components/View";
@@ -31,7 +31,6 @@ const Auth = (props) => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline>
                 <View activeView={activePanel}>
                     <Login id="login" showAlert={showSnackBar} userData={props.userData}/>
 
@@ -41,7 +40,6 @@ const Auth = (props) => {
                         </Snackbar>
                     </Stack>
                 </View>
-            </CssBaseline>
         </Container>
     );
 };

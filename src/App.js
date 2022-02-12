@@ -2,9 +2,11 @@ import React, {useState} from "react";
 import Auth from "./Auth/auth";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {View} from "./Components/View";
+import {Header} from "./Components/Header";
+import {CssBaseline} from "@mui/material";
 
 const App = () => {
-    const [activeView, setActiveView] = useState('auth');
+    const [activeView, setActiveView] = useState('header');
     const [themeUI, setThemeUI] = useState(null);
     const tempTheme = createTheme({palette: {mode: 'dark',},});
 
@@ -27,9 +29,12 @@ const App = () => {
 
     return (
         <ThemeProvider theme={tempTheme}>
-            <View activeView={activeView}>
-                <Auth id="auth" userData={setUser}/>
-            </View>
+            <CssBaseline>
+                <View activeView={activeView}>
+                    <Auth id="auth" userData={setUser}/>
+                    <Header id="header" title="Мероприятия"/>
+                </View>
+            </CssBaseline>
         </ThemeProvider>
     );
 }

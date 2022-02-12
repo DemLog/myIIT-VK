@@ -1,7 +1,5 @@
-
 export const View = (props) => {
     const childs = Array.isArray(props.children) ? props.children : [props.children]
-    console.log(childs)
     const activeView = props.activeView
 
     const renderComponents = [];
