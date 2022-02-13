@@ -54,9 +54,9 @@ export const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!inputData.login)
-            displayErrorInput('login', 'Вы не ввели в поле логин!');
+            return displayErrorInput('login', 'Вы не ввели в поле логин!');
         if (!inputData.password)
-            displayErrorInput('password', 'Вы не ввели в поле пароль!');
+            return displayErrorInput('password', 'Вы не ввели в поле пароль!');
 
         const authUser = new AuthUser(inputData.login, inputData.password);
         authUser.loginUser()
