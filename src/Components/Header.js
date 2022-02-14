@@ -6,7 +6,7 @@ import {
     Box,
     IconButton,
     Avatar,
-    Badge
+    Badge, Tab, Tabs, Divider
 } from "@mui/material";
 
 import MailIcon from "@mui/icons-material/Mail";
@@ -15,11 +15,14 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import {deepOrange} from "@mui/material/colors";
 
 import logo from "./image/header_logo.png";
+import React from "react";
 
 export const Header = (props) => {
+    const {tabs} = props;
+
     return (
         <AppBar position="fixed">
-            <Container fixed maxWidth="xl">
+            <Container maxWidth="xl">
                 <Toolbar>
                     <Box component="div" sx={{display: "flex"}}>
                         <img src={logo} style={{width: "45px", height: "45px"}} alt="Logo myIIT"/>
@@ -44,6 +47,7 @@ export const Header = (props) => {
                         </IconButton>
                     </Box>
                 </Toolbar>
+                {tabs}
             </Container>
         </AppBar>
     );

@@ -1,9 +1,10 @@
-import {useState} from "react";
-
 import {
     BottomNavigation,
-    BottomNavigationAction, Fab, Paper
+    BottomNavigationAction,
+    Fab,
+    Paper
 } from "@mui/material";
+
 import {styled} from '@mui/material/styles';
 
 import NewspaperIcon from '@mui/icons-material/Newspaper';
@@ -13,11 +14,6 @@ import TimerIcon from '@mui/icons-material/Timer';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const TabBar = (props) => {
-    const [value, setValue] = useState('news');
-    const handleChange = (e, value) => {
-        setValue(value);
-    };
-
     const StyledFab = styled(Fab)({
         position: 'absolute',
         zIndex: 1,
@@ -27,9 +23,13 @@ export const TabBar = (props) => {
         margin: '0 auto',
     });
 
+    const handleChange = (e, value) => {
+        props.setActiveBar(value);
+    };
+
     return (
         <Paper sx={{display: {xs: 'block', md: 'none'}, position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
-            <BottomNavigation value={value} onChange={handleChange}>
+            <BottomNavigation value={props.activeBar} onChange={handleChange}>
                 <BottomNavigationAction
                     value="news"
                     icon={<NewspaperIcon/>}

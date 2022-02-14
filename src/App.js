@@ -2,14 +2,14 @@ import React, {useState} from "react";
 import Auth from "./Auth/auth";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {View} from "./Components/View";
-import {Header} from "./Components/Header";
 import {CssBaseline} from "@mui/material";
-import {TabBar} from "./Components/TabBar";
+
+import Main from "./Main/main";
 
 const App = () => {
-    const [activeView, setActiveView] = useState('tabbar');
+    const [activeView, setActiveView] = useState('main');
     const [themeUI, setThemeUI] = useState(null);
-    const tempTheme = createTheme({palette: {mode: 'light',},});
+    const tempTheme = createTheme({palette: {mode: 'dark',},});
 
     const [user, setUser] = useState(null);
 
@@ -33,8 +33,7 @@ const App = () => {
             <CssBaseline>
                 <View activeView={activeView}>
                     <Auth id="auth" userData={setUser}/>
-                    <Header id="header" title="Мероприятия"/>
-                    <TabBar id="tabbar"/>
+                    <Main id="main"/>
                 </View>
             </CssBaseline>
         </ThemeProvider>
