@@ -62,11 +62,7 @@ export const Login = (props) => {
         authUser.loginUser()
             .then((response) => {
                 if (!response.data) {
-                    let msg = '';
-                    response.err.error.forEach((item) => {
-                        msg += item + '\n';
-                    });
-                    return showAlert(msg, 'error');
+                    authUser.regUser()
                 }
                 showAlert('Вход выполнен успешно!', 'success');
             })
