@@ -34,7 +34,7 @@ export const Header = (props) => {
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                         <IconButton size="large" color="inherit">
                             <Badge badgeContent={4} color="error">
-                                <MailIcon/>
+                                <MailIcon/> 
                             </Badge>
                         </IconButton>
                         <IconButton size="large" color="inherit">
