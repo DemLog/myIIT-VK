@@ -47,7 +47,7 @@ export const Header = (props) => {
                         </IconButton>
                     </Box>
                 </Toolbar>
-                {tabs}
+                {tabs && <><Divider/>{tabs}</>}
             </Container>
         </AppBar>
     );
