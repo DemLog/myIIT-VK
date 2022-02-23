@@ -7,11 +7,11 @@ import {CssBaseline} from "@mui/material";
 import Main from "./Main/main";
 
 const App = () => {
-    const [activeView, setActiveView] = useState('main');
-    const [themeUI, setThemeUI] = useState(null);
-    const tempTheme = createTheme({palette: {mode: 'dark',},});
+    const [activeView, setActiveView] = useState('auth');
+    const [themeUI, setThemeUI] = useState(createTheme({palette: {mode: 'dark',},}));
 
     const [user, setUser] = useState(null);
+    const [vkUser, setVKUser] = useState(null);
 
     const changeTheme = (theme) => {
         setThemeUI(createTheme({
@@ -29,11 +29,11 @@ const App = () => {
 
 
     return (
-        <ThemeProvider theme={tempTheme}>
+        <ThemeProvider theme={themeUI}>
             <CssBaseline>
                 <View activeView={activeView}>
-                    <Auth id="auth" userData={setUser}/>
-                    <Main id="main"/>
+                    <Auth id="auth" userData={setUser} goView={goView} vkUser={vkUser} setVKUser={setVKUser}/>
+                    <Main id="main" user={user}/>
                 </View>
             </CssBaseline>
         </ThemeProvider>
