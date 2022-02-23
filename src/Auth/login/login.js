@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import {
     Box,
@@ -32,6 +32,23 @@ export const Login = (props) => {
         'password': '',
     });
 
+    const vkURL = window.location.search;
+
+    useEffect(() => {
+        async function loginVKUrl() {
+            const authUser = new AuthUser();
+            await authUser.loginVK(vkURL)
+                .then(response => {
+                    if (response.data) {
+                        showAlert('Вход выполнен успешно!', 'success');
+                        props.userData(new User(authUser));
+                        return props.goView('main');
+                    }
+                })
+        }
+        loginVKUrl();
+    }, []);
+
     const handleChange = (e) => {
         const {name, value} = e.target;
         if (errInput[name])
@@ -60,18 +77,25 @@ export const Login = (props) => {
 
         const authUser = new AuthUser(inputData.login, inputData.password);
         authUser.loginUser()
-            .then((response) => {
+            .then(response => {
                 if (!response.data) {
-                    let msg = '';
-                    response.err.error.forEach((item) => {
-                        msg += item + '\n';
-                    });
-                    return showAlert(msg, 'error');
+                    authUser.regUser(props.vkUser.id)
+                        .then(response => {
+                            if (!response.data) {
+                                return showAlert('Невозможно авторизоваться. Проверьте свои данные', 'error');
+                            }
+                            showAlert('Вход выполнен успешно!', 'success');
+                            props.userData(new User(authUser));
+                            return props.goView('main');
+                        })
                 }
-                showAlert('Вход выполнен успешно!', 'success');
-            })
+                else {
+                    showAlert('Вход выполнен успешно!', 'success');
+                    props.userData(new User(authUser));
+                    return props.goView('main');
+                }
 
-        props.userData(new User(authUser));
+            })
     };
 
     const displayErrorInput = (name, msg, status=true) => {

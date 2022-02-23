@@ -11,6 +11,7 @@ const App = () => {
     const [themeUI, setThemeUI] = useState(createTheme({palette: {mode: 'dark',},}));
 
     const [user, setUser] = useState(null);
+    const [vkUser, setVKUser] = useState(null);
 
     const changeTheme = (theme) => {
         setThemeUI(createTheme({
@@ -31,7 +32,7 @@ const App = () => {
         <ThemeProvider theme={themeUI}>
             <CssBaseline>
                 <View activeView={activeView}>
-                    <Auth id="auth" userData={setUser} goView={goView}/>
+                    <Auth id="auth" userData={setUser} goView={goView} vkUser={vkUser} setVKUser={setVKUser}/>
                     <Main id="main" user={user}/>
                 </View>
             </CssBaseline>
