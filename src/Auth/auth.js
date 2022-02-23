@@ -15,12 +15,9 @@ const Auth = (props) => {
         msg: null
     });
 
-    const vkURL = window.location.search;
-
     useEffect(() => {
-        async function getStorageToken() {
-            await bridge
-                .send('VKWebAppGetUserInfo')
+        async function getUserVK() {
+            await bridge.send('VKWebAppGetUserInfo')
                 .then(data => {
                     props.setVKUser(data);
                 })
@@ -28,7 +25,7 @@ const Auth = (props) => {
                     showSnackBar(error.error_data.error_reason, 'error');
                 });
         }
-        getStorageToken();
+        getUserVK();
     }, []);
 
     const showSnackBar = (msg, type) => {
@@ -50,7 +47,7 @@ const Auth = (props) => {
     return (
         <Container component="main" maxWidth="xs">
                 <View activeView={activePanel}>
-                    <Login id="login" showAlert={showSnackBar} userData={props.userData} vkURL={vkURL} vkID={props.vkUser.id}/>
+                    <Login id="login" showAlert={showSnackBar} userData={props.userData} vkUser={props.vkUser} goView={props.goView}/>
 
                     <Stack spacing={2} sx={{width: '100%'}}>
                         <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>
