@@ -36,6 +36,7 @@ export const Login = (props) => {
 
     useEffect(() => {
         async function loginVKUrl() {
+            props.spinner(true);
             const authUser = new AuthUser();
             await authUser.loginVK(vkURL)
                 .then(response => {
@@ -44,8 +45,9 @@ export const Login = (props) => {
                         props.userData(new User(authUser));
                         return props.goView('main');
                     }
-                })
-        }
+                });
+            props.spinner(false);
+        };
         loginVKUrl();
     }, []);
 
@@ -75,6 +77,7 @@ export const Login = (props) => {
         if (!inputData.password)
             return displayErrorInput('password', 'Вы не ввели в поле пароль!');
 
+        props.spinner(true);
         const authUser = new AuthUser(inputData.login, inputData.password);
         authUser.loginUser()
             .then(response => {
@@ -96,6 +99,7 @@ export const Login = (props) => {
                 }
 
             })
+        props.spinner(false);
     };
 
     const displayErrorInput = (name, msg, status=true) => {

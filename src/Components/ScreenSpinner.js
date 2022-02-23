@@ -1,4 +1,4 @@
-import {Backdrop, CircularProgress} from "@mui/material";
+import {Backdrop, CircularProgress, Paper} from "@mui/material";
 
 export const ScreenSpinner = (props) => {
     return (
@@ -6,7 +6,9 @@ export const ScreenSpinner = (props) => {
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={props.open}
         >
-            <CircularProgress color="inherit" />
+            <Paper elevation={3} sx={{p: 2, opacity: 0.9}}>
+                <CircularProgress color="inherit" />
+            </Paper>
         </Backdrop>
     );
 };
