@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {AuthUser, User} from "myiit-api-lib";
 
 import {
     Box,
@@ -10,19 +11,23 @@ import {
     Typography
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-
-import { AuthUser, User } from 'myiit-api-lib'
-
 import logo from "../image/logo.png";
 
-export const Login = (props) => {
+import {observer} from "mobx-react-lite";
+import storeUser from "../../Store/storeUser";
+import storeView from "../../Store/storeView";
+
+const Login = observer((props) => {
+
     const showAlert = props.showAlert;
+    const vkURL = window.location.search;
 
     const [inputData, changeInputData] = useState({
         'login': '',
         'password': '',
         'showPassword': false
     });
+
     const [errInput, setErrInput] = useState({
         'login': false,
         'password': false,
@@ -31,26 +36,16 @@ export const Login = (props) => {
         'login': '',
         'password': '',
     });
-
-    const vkURL = window.location.search;
-
-    useEffect(() => {
-        async function loginVKUrl() {
-            props.spinner(true);
-            const authUser = new AuthUser();
-            await authUser.loginVK(vkURL)
-                .then(response => {
-                    if (response.data) {
-                        showAlert('Вход выполнен успешно!', 'success');
-                        props.userData(new User(authUser));
-                        return props.goView('main');
-                    }
-                });
-            props.spinner(false);
-        };
-        loginVKUrl();
-    }, []);
-
+    const displayErrorInput = (name, msg, status = true) => {
+        setErrInput(prevState => ({
+            ...prevState,
+            [name]: status
+        }));
+        setErrMessage(prevState => ({
+            ...prevState,
+            [name]: msg
+        }));
+    }
     const handleChange = (e) => {
         const {name, value} = e.target;
         if (errInput[name])
@@ -61,6 +56,7 @@ export const Login = (props) => {
             [name]: value
         }));
     };
+
     const handleClickShowPassword = () => {
         changeInputData(prevState => ({
             ...prevState,
@@ -70,6 +66,7 @@ export const Login = (props) => {
     const handleMouseDownPassword = (e) => {
         e.preventDefault();
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!inputData.login)
@@ -82,36 +79,41 @@ export const Login = (props) => {
         authUser.loginUser()
             .then(response => {
                 if (!response.data) {
-                    authUser.regUser(props.vkUser.id)
+                    authUser.regUser(storeUser.vkUser.id)
                         .then(response => {
                             if (!response.data) {
                                 return showAlert('Невозможно авторизоваться. Проверьте свои данные', 'error');
                             }
                             showAlert('Вход выполнен успешно!', 'success');
-                            props.userData(new User(authUser));
-                            return props.goView('main');
+                            storeUser.addMyUser(new User(authUser));
+                            return storeView.changeView("app", "main");
                         })
-                }
-                else {
+                } else {
                     showAlert('Вход выполнен успешно!', 'success');
-                    props.userData(new User(authUser));
-                    return props.goView('main');
+                    storeUser.addMyUser(new User(authUser));
+                    return storeView.changeView("app", "main");
                 }
 
             })
         props.spinner(false);
     };
 
-    const displayErrorInput = (name, msg, status=true) => {
-        setErrInput(prevState => ({
-            ...prevState,
-            [name]: status
-        }));
-        setErrMessage(prevState => ({
-            ...prevState,
-            [name]: msg
-        }));
-    }
+    useEffect(() => {
+        async function loginVKUrl() {
+            props.spinner(true);
+            const authUser = new AuthUser();
+            await authUser.loginVK(vkURL)
+                .then(response => {
+                    if (response.data) {
+                        showAlert('Вход выполнен успешно!', 'success');
+                        storeUser.addMyUser(new User(authUser));
+                        return storeView.changeView("app", "main");
+                    }
+                });
+            props.spinner(false);
+        };
+        loginVKUrl();
+    }, []);
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20%'}}>
@@ -144,4 +146,6 @@ export const Login = (props) => {
             <Link href="#" underline="hover">Сбросить пароль</Link>
         </Box>
     );
-};
+});
+
+export default Login;

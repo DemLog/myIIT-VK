@@ -1,4 +1,8 @@
-import {Backdrop, CircularProgress, Paper} from "@mui/material";
+import {
+    Backdrop,
+    CircularProgress,
+    Paper
+} from "@mui/material";
 
 export const ScreenSpinner = (props) => {
     return (

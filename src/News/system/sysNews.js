@@ -1,6 +1,8 @@
-import {Box, Card, CardContent, CardMedia, Typography} from "@mui/material";
+import {Box, Card, CardContent, Typography} from "@mui/material";
 
-export const SystemNews = (props) => {
+import {observer} from "mobx-react-lite";
+
+const SystemNews = observer((props) => {
     return(
         <Box>
             <Card sx={{ mb: 2 }}>
@@ -89,4 +91,6 @@ export const SystemNews = (props) => {
             </Card>
         </Box>
     );
-};
+});
+
+export default SystemNews;
