@@ -1,12 +1,19 @@
-import {Header} from "../Components/Header";
 import React, {useState} from "react";
-import {AppBar, Box, Button, Card, CardActions, CardContent, Container, Tab, Tabs, Typography} from "@mui/material";
+
+import {
+    Box,
+    Tab,
+    Tabs
+} from "@mui/material";
+
 import {HideOnScroll} from "../Components/HideOnScroll";
 import {View} from "../Components/View";
-import {SystemNews} from "./system/sysNews";
+import {Header} from "../Components/Header";
+import SystemNews from "./system/sysNews";
 
+import {observer} from "mobx-react-lite";
 
-const News = (props) => {
+const News = observer((props) => {
     const [valueTab, setValueTab] = useState(0);
     const handleChangeTab = (e, value) => {
         setValueTab(value);
@@ -31,6 +38,6 @@ const News = (props) => {
             </View>
         </Box>
     );
-};
+});
 
 export default News;
