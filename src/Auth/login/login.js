@@ -3,7 +3,7 @@ import {AuthUser, User} from "myiit-api-lib";
 
 import {
     Box,
-    Button,
+    Button, Grid,
     IconButton,
     InputAdornment,
     Link,
@@ -116,34 +116,45 @@ const Login = observer((props) => {
     }, []);
 
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20%'}}>
-            <img src={logo} style={{maxWidth: "60%"}} alt="Logo myIIT"/>
-            <Typography component="h1" variant="h5">
-                Авторизация
-            </Typography>
-            <Box component="form" noValidate sx={{mt: 1}}>
-                <TextField margin="normal" fullWidth label="Логин Moodle" name="login" value={inputData.login}
-                           onChange={handleChange} error={errInput.login} helperText={errMessage.login}
-                           autoFocus/>
-                <TextField margin="normal" fullWidth label="Пароль" name="password" value={inputData.password}
-                           onChange={handleChange} error={errInput.password} helperText={errMessage.password}
-                           type={inputData.showPassword ? 'text' : 'password'}
-                           InputProps={{
-                               endAdornment:
-                                   <InputAdornment position="end">
-                                       <IconButton aria-label="toggle password visibility"
-                                                   onClick={handleClickShowPassword}
-                                                   onMouseDown={handleMouseDownPassword}>{inputData.showPassword ?
-                                           <VisibilityOff/> : <Visibility/>}
-                                       </IconButton>
-                                   </InputAdornment>
-                           }}
-                />
-                <Button fullWidth variant="contained" onClick={handleSubmit} sx={{mt: 2, mb: 4, p: 1}}>
-                    Войти
-                </Button>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            justifyContent: 'space-between',
+        }}>
+            <Box sx={{marginTop: '20%', textAlign: 'center', px: 2}}>
+                <img src={logo} style={{maxWidth: "60%"}} alt="Logo myIIT"/>
+                <Box sx={{boxShadow: 3, borderRadius: 2, p: 2, my: 1, mx: 2}}>
+                    <Typography component="h1" variant="h5" sx={{mb: 1}}>
+                        Авторизация
+                    </Typography>
+                    <TextField margin="normal" fullWidth label="Логин Moodle" name="login" value={inputData.login}
+                               onChange={handleChange} error={errInput.login} helperText={errMessage.login}
+                               autoFocus/>
+                    <TextField margin="normal" fullWidth label="Пароль" name="password" value={inputData.password}
+                               onChange={handleChange} error={errInput.password} helperText={errMessage.password}
+                               type={inputData.showPassword ? 'text' : 'password'}
+                               InputProps={{
+                                   endAdornment:
+                                       <InputAdornment position="end">
+                                           <IconButton aria-label="toggle password visibility"
+                                                       onClick={handleClickShowPassword}
+                                                       onMouseDown={handleMouseDownPassword}>{inputData.showPassword ?
+                                               <VisibilityOff/> : <Visibility/>}
+                                           </IconButton>
+                                       </InputAdornment>
+                               }}
+                    />
+                    <Button sx={{mt: 2}} fullWidth variant="contained" onClick={handleSubmit}>
+                        Войти
+                    </Button>
+                </Box>
+                <Link href="#" underline="hover">Сбросить пароль</Link>
             </Box>
-            <Link href="#" underline="hover">Сбросить пароль</Link>
+            <Box sx={{display: 'flex', justifyContent: 'space-between', py: 1, px: 4, boxShadow: 3}}>
+                <Link href="#" underline="hover">Условия использования</Link>
+                <Link href="#" underline="hover">О программе</Link>
+            </Box>
         </Box>
     );
 });

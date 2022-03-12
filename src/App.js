@@ -11,7 +11,7 @@ import {observer} from "mobx-react-lite";
 import storeView from "./Store/storeView";
 
 const App = observer((props) => {
-    const [themeUI, setThemeUI] = useState(createTheme({palette: {mode: 'dark',},})); // переезд
+    const [themeUI, setThemeUI] = useState(createTheme({palette: {mode: 'light',},})); // переезд
 
     return (
         <ThemeProvider theme={themeUI}>

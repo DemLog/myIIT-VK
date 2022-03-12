@@ -38,7 +38,7 @@ const Auth = observer((props) => {
         });
     };
 
-    const [spinner, openSpinner] = useState(true);
+    const [spinner, openSpinner] = useState(false);
 
     useEffect(() => {
         async function getUserVK() {
@@ -57,7 +57,7 @@ const Auth = observer((props) => {
     }, []);
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" sx={{p: 0}}>
             <View activeView={storeView.activeView.auth}>
                 <ScreenSpinner open={spinner}/>
                 <Login id="login" showAlert={showSnackBar} spinner={openSpinner}/>
