@@ -1,29 +1,28 @@
-import {useState} from "react";
-import {View} from "../Components/View";
 import {Container} from "@mui/material";
+import "./style/main.css";
+
+import {View} from "../Components/View";
 import {TabBar} from "../Components/TabBar";
 import News from "../News/news";
 
-const Main = (props) => {
-    const [activePanel, setActivePanel] = useState('main');
-    const goPanel = (e) => {
-        if (typeof e != 'string')
-            setActivePanel(e.currentTarget.dataset.to);
-        setActivePanel(e);
-    };
+import {observer} from "mobx-react-lite";
+import storeTabs from "../Store/storeTabs";
+import storeView from "../Store/storeView";
 
-    const [activeBar, setActiveBar] = useState('news');
 
-    return(
-        <View activeView={activePanel}>
+const Main = observer((props) => {
+    // document.getElementById('root').className='root'
+
+    return (
+        <View activeView={storeView.activeView.main}>
             <Container id="main">
-                <View activeView={activeBar}>
+                <View activeView={storeTabs.activeTab}>
                     <News id="news"/>
-                    <TabBar activeBar={activeBar} setActiveBar={setActiveBar}/>
+                    <TabBar/>
                 </View>
             </Container>
         </View>
     );
-};
+});
 
 export default Main;

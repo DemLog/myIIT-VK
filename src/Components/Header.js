@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
     AppBar,
     Container,
@@ -6,16 +8,13 @@ import {
     Box,
     IconButton,
     Avatar,
-    Badge, Tab, Tabs, Divider
+    Badge, Divider
 } from "@mui/material";
 
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-
 import {deepOrange} from "@mui/material/colors";
-
 import logo from "./image/header_logo.png";
-import React from "react";
 
 export const Header = (props) => {
     const {tabs} = props;

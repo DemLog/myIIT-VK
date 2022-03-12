@@ -1,39 +1,27 @@
 import {useEffect, useState} from "react";
+import bridge from "@vkontakte/vk-bridge";
 
-import {Alert, Container, Snackbar, Stack} from "@mui/material";
+import {
+    Alert,
+    Container,
+    Snackbar,
+    Stack
+} from "@mui/material";
 
-import {Login} from "./login/login";
+import Login from "./login/login";
 import {View} from "../Components/View";
-
-import bridge from '@vkontakte/vk-bridge';
 import {ScreenSpinner} from "../Components/ScreenSpinner";
 
-const Auth = (props) => {
-    const [activePanel, setActivePanel] = useState('login')
+import {observer} from "mobx-react-lite";
+import storeUser from "../Store/storeUser";
+import storeView from "../Store/storeView";
+
+const Auth = observer((props) => {
 
     const [alert, setAlert] = useState({
         show: false,
         msg: null
     });
-
-    const [spinner, openSpinner] = useState(true);
-
-    useEffect(() => {
-        async function getUserVK() {
-            openSpinner(true);
-            await bridge.send('VKWebAppGetUserInfo')
-                .then(data => {
-                    props.setVKUser(data);
-                })
-                .catch(error => {
-                    showSnackBar(error.error_data.error_reason, 'error');
-                });
-            openSpinner(false);
-        }
-
-        getUserVK();
-    }, []);
-
     const showSnackBar = (msg, type) => {
         setAlert({
             show: true,
@@ -50,12 +38,29 @@ const Auth = (props) => {
         });
     };
 
+    const [spinner, openSpinner] = useState(true);
+
+    useEffect(() => {
+        async function getUserVK() {
+            openSpinner(true);
+            await bridge.send('VKWebAppGetUserInfo')
+                .then(data => {
+                    storeUser.addVKUser(data);
+                })
+                .catch(error => {
+                    showSnackBar(error.error_data.error_reason, 'error');
+                });
+            openSpinner(false);
+        }
+
+        getUserVK();
+    }, []);
+
     return (
         <Container component="main" maxWidth="xs">
-            <View activeView={activePanel}>
+            <View activeView={storeView.activeView.auth}>
                 <ScreenSpinner open={spinner}/>
-                <Login id="login" showAlert={showSnackBar} userData={props.userData} vkUser={props.vkUser}
-                       goView={props.goView} spinner={openSpinner}/>
+                <Login id="login" showAlert={showSnackBar} spinner={openSpinner}/>
 
                 <Stack spacing={2} sx={{width: '100%'}}>
                     <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>
@@ -65,6 +70,6 @@ const Auth = (props) => {
             </View>
         </Container>
     );
-};
+});
 
 export default Auth;

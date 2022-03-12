@@ -1,12 +1,22 @@
-import {Header} from "../Components/Header";
 import React, {useState} from "react";
-import {AppBar, Box, Button, Card, CardActions, CardContent, Container, Tab, Tabs, Typography} from "@mui/material";
+
+import {
+    Box,
+    Tab,
+    Tabs
+} from "@mui/material";
+
 import {HideOnScroll} from "../Components/HideOnScroll";
 import {View} from "../Components/View";
-import {SystemNews} from "./system/sysNews";
+import {Header} from "../Components/Header";
+import SystemNews from "./system/sysNews";
 
+import {observer} from "mobx-react-lite";
+import {ScreenSpinner} from "../Components/ScreenSpinner";
 
-const News = (props) => {
+const News = observer((props) => {
+    const [spinner, openSpinner] = useState(false);
+
     const [valueTab, setValueTab] = useState(0);
     const handleChangeTab = (e, value) => {
         setValueTab(value);
@@ -16,7 +26,8 @@ const News = (props) => {
         return (
             <HideOnScroll direction="down">
                 <Tabs value={valueTab} onChange={handleChangeTab} aria-label="News tabs category" variant="fullWidth">
-                    <Tab label="Лента" id="myiit"/>
+                    {/*<ScreenSpinner open={spinner}/>*/}
+                    <Tab label="Лента" id="myiit" spinner={openSpinner}/>
                     <Tab label="ИИТ ЧелГУ" id="iit_csu"/>
                 </Tabs>
             </HideOnScroll>
@@ -31,6 +42,6 @@ const News = (props) => {
             </View>
         </Box>
     );
-};
+});
 
 export default News;

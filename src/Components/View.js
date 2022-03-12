@@ -11,4 +11,4 @@ export const View = (props) => {
 
     return (renderComponents);
 
-}
+};
