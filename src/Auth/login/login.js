@@ -88,12 +88,13 @@ const Login = observer((props) => {
                             if (!response.data) {
                                 return showAlert('Невозможно авторизоваться. Проверьте свои данные', 'error');
                             }
-                            showAlert('Вход выполнен успешно!', 'success');
                             storeUser.addMyUser(new User(authUser));
                             return storeView.changeView("app", "main");
                         })
+                    if (typeof response.err.error !== 'undefined') {
+                        return showAlert(response.err.error[0], 'error');
+                    }
                 } else {
-                    showAlert('Вход выполнен успешно!', 'success');
                     storeUser.addMyUser(new User(authUser));
                     return storeView.changeView("app", "main");
                 }
@@ -102,22 +103,22 @@ const Login = observer((props) => {
         props.spinner(false);
     };
 
-    useEffect(() => {
-        async function loginVKUrl() {
-            props.spinner(true);
-            const authUser = new AuthUser();
-            await authUser.loginVK(vkURL)
-                .then(response => {
-                    if (response.data) {
-                        showAlert('Вход выполнен успешно!', 'success');
-                        storeUser.addMyUser(new User(authUser));
-                        return storeView.changeView("app", "main");
-                    }
-                });
-            props.spinner(false);
-        };
-        loginVKUrl();
-    }, []);
+    // useEffect(() => {
+    //     async function loginVKUrl() {
+    //         props.spinner(true);
+    //         const authUser = new AuthUser();
+    //         await authUser.loginVK(vkURL)
+    //             .then(response => {
+    //                 if (response.data) {
+    //                     showAlert('Вход выполнен успешно!', 'success');
+    //                     storeUser.addMyUser(new User(authUser));
+    //                     return storeView.changeView("app", "main");
+    //                 }
+    //             });
+    //         props.spinner(false);
+    //     };
+    //     loginVKUrl();
+    // }, []);
 
     return (
         <Box sx={{

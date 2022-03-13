@@ -42,7 +42,9 @@ const Auth = observer((props) => {
 
     const [spinner, openSpinner] = useState(false);
 
-    const comeBackView = () => {storeView.changeView("auth", "login")};
+    const comeBackView = () => {
+        storeView.changeView("auth", "login")
+    };
 
     useEffect(() => {
         async function getUserVK() {
@@ -69,11 +71,10 @@ const Auth = observer((props) => {
                 <About id="about" back={comeBackView}/>
                 <ResetPass id="reset" back={comeBackView}/>
 
-                <Stack spacing={2} sx={{width: '100%'}}>
-                    <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>
-                        {alert.msg}
-                    </Snackbar>
-                </Stack>
+                <Snackbar open={alert.show} autoHideDuration={3000} onClose={closeSnackBar}
+                          anchorOrigin={{vertical: 'bottom', horizontal: 'central'}}>
+                    {alert.msg}
+                </Snackbar>
             </View>
         </Container>
     );
