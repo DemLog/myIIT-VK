@@ -16,6 +16,7 @@ import {ScreenSpinner} from "../Components/ScreenSpinner";
 import {observer} from "mobx-react-lite";
 import storeUser from "../Store/storeUser";
 import storeView from "../Store/storeView";
+import ResetPass from "./resetPass/resetPass";
 
 const Auth = observer((props) => {
 
@@ -66,6 +67,7 @@ const Auth = observer((props) => {
                 <Login id="login" showAlert={showSnackBar} spinner={openSpinner}/>
                 <Terms id="terms" back={comeBackView}/>
                 <About id="about" back={comeBackView}/>
+                <ResetPass id="reset" back={comeBackView}/>
 
                 <Stack spacing={2} sx={{width: '100%'}}>
                     <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>

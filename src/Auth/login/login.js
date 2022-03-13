@@ -67,7 +67,7 @@ const Login = observer((props) => {
         e.preventDefault();
     };
 
-    const openDocs = (e) => {
+    const openPanel = (e) => {
         storeView.changeView("auth", e.currentTarget.dataset.name)
     };
 
@@ -152,11 +152,11 @@ const Login = observer((props) => {
                         Войти
                     </Button>
                 </Box>
-                <Link href="#" underline="hover">Сбросить пароль</Link>
+                <Link href="#" data-name="reset" onClick={openPanel} underline="hover">Сбросить пароль</Link>
             </Box>
             <Box sx={{display: 'flex', justifyContent: 'space-between', py: 1, px: 4, boxShadow: 3}}>
-                <Link data-name="terms" onClick={openDocs} underline="hover">Условия использования</Link>
-                <Link data-name="about" onClick={openDocs} underline="hover">О программе</Link>
+                <Link data-name="terms" onClick={openPanel} underline="hover">Условия использования</Link>
+                <Link data-name="about" onClick={openPanel} underline="hover">О программе</Link>
             </Box>
         </Box>
     );
