@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 import Login from "./login/login";
+import {About, Terms} from "./login/docs";
 import {View} from "../Components/View";
 import {ScreenSpinner} from "../Components/ScreenSpinner";
 
@@ -40,6 +41,8 @@ const Auth = observer((props) => {
 
     const [spinner, openSpinner] = useState(false);
 
+    const comeBackView = () => {storeView.changeView("auth", "login")};
+
     useEffect(() => {
         async function getUserVK() {
             openSpinner(true);
@@ -57,10 +60,12 @@ const Auth = observer((props) => {
     }, []);
 
     return (
-        <Container component="main" maxWidth="xs" sx={{p: 0}}>
+        <Container component="main" sx={{p: 0}}>
             <View activeView={storeView.activeView.auth}>
                 <ScreenSpinner open={spinner}/>
                 <Login id="login" showAlert={showSnackBar} spinner={openSpinner}/>
+                <Terms id="terms" back={comeBackView}/>
+                <About id="about" back={comeBackView}/>
 
                 <Stack spacing={2} sx={{width: '100%'}}>
                     <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>

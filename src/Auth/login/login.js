@@ -67,6 +67,10 @@ const Login = observer((props) => {
         e.preventDefault();
     };
 
+    const openDocs = (e) => {
+        storeView.changeView("auth", e.currentTarget.dataset.name)
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!inputData.login)
@@ -122,15 +126,14 @@ const Login = observer((props) => {
             height: '100%',
             justifyContent: 'space-between',
         }}>
-            <Box sx={{marginTop: '20%', textAlign: 'center', px: 2}}>
+            <Box sx={{marginTop: '15%', textAlign: 'center', px: 2}}>
                 <img src={logo} style={{maxWidth: "60%"}} alt="Logo myIIT"/>
                 <Box sx={{boxShadow: 3, borderRadius: 2, p: 2, my: 1, mx: 2}}>
                     <Typography component="h1" variant="h5" sx={{mb: 1}}>
                         Авторизация
                     </Typography>
                     <TextField margin="normal" fullWidth label="Логин Moodle" name="login" value={inputData.login}
-                               onChange={handleChange} error={errInput.login} helperText={errMessage.login}
-                               autoFocus/>
+                               onChange={handleChange} error={errInput.login} helperText={errMessage.login}/>
                     <TextField margin="normal" fullWidth label="Пароль" name="password" value={inputData.password}
                                onChange={handleChange} error={errInput.password} helperText={errMessage.password}
                                type={inputData.showPassword ? 'text' : 'password'}
@@ -152,8 +155,8 @@ const Login = observer((props) => {
                 <Link href="#" underline="hover">Сбросить пароль</Link>
             </Box>
             <Box sx={{display: 'flex', justifyContent: 'space-between', py: 1, px: 4, boxShadow: 3}}>
-                <Link href="#" underline="hover">Условия использования</Link>
-                <Link href="#" underline="hover">О программе</Link>
+                <Link data-name="terms" onClick={openDocs} underline="hover">Условия использования</Link>
+                <Link data-name="about" onClick={openDocs} underline="hover">О программе</Link>
             </Box>
         </Box>
     );
