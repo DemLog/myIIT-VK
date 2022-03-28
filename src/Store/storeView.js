@@ -5,6 +5,7 @@ class StoreView {
         app: "auth",
         auth: "login",
         main: "main",
+        news: "system",
     };
 
     constructor() {

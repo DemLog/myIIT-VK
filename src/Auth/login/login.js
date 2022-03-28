@@ -1,14 +1,8 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {AuthUser, User} from "myiit-api-lib";
 
 import {
-    Box,
-    Button, Grid,
-    IconButton,
-    InputAdornment,
-    Link,
-    TextField,
-    Typography
+    Box, Button, IconButton, InputAdornment, Link, TextField, Typography
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import logo from "../image/logo.png";
@@ -23,44 +17,35 @@ const Login = observer((props) => {
     const vkURL = window.location.search;
 
     const [inputData, changeInputData] = useState({
-        'login': '',
-        'password': '',
-        'showPassword': false
+        'login': '', 'password': '', 'showPassword': false
     });
 
     const [errInput, setErrInput] = useState({
-        'login': false,
-        'password': false,
+        'login': false, 'password': false,
     });
     const [errMessage, setErrMessage] = useState({
-        'login': '',
-        'password': '',
+        'login': '', 'password': '',
     });
     const displayErrorInput = (name, msg, status = true) => {
         setErrInput(prevState => ({
-            ...prevState,
-            [name]: status
+            ...prevState, [name]: status
         }));
         setErrMessage(prevState => ({
-            ...prevState,
-            [name]: msg
+            ...prevState, [name]: msg
         }));
     }
     const handleChange = (e) => {
         const {name, value} = e.target;
-        if (errInput[name])
-            displayErrorInput(name, '', false)
+        if (errInput[name]) displayErrorInput(name, '', false)
 
         changeInputData(prevState => ({
-            ...prevState,
-            [name]: value
+            ...prevState, [name]: value
         }));
     };
 
     const handleClickShowPassword = () => {
         changeInputData(prevState => ({
-            ...prevState,
-            showPassword: !inputData.showPassword
+            ...prevState, showPassword: !inputData.showPassword
         }));
     };
     const handleMouseDownPassword = (e) => {
@@ -73,10 +58,8 @@ const Login = observer((props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!inputData.login)
-            return displayErrorInput('login', 'Вы не ввели в поле логин!');
-        if (!inputData.password)
-            return displayErrorInput('password', 'Вы не ввели в поле пароль!');
+        if (!inputData.login) return displayErrorInput('login', 'Вы не ввели в поле логин!');
+        if (!inputData.password) return displayErrorInput('password', 'Вы не ввели в поле пароль!');
 
         props.spinner(true);
         const authUser = new AuthUser(inputData.login, inputData.password);
@@ -103,29 +86,25 @@ const Login = observer((props) => {
         props.spinner(false);
     };
 
-    // useEffect(() => {
-    //     async function loginVKUrl() {
-    //         props.spinner(true);
-    //         const authUser = new AuthUser();
-    //         await authUser.loginVK(vkURL)
-    //             .then(response => {
-    //                 if (response.data) {
-    //                     showAlert('Вход выполнен успешно!', 'success');
-    //                     storeUser.addMyUser(new User(authUser));
-    //                     return storeView.changeView("app", "main");
-    //                 }
-    //             });
-    //         props.spinner(false);
-    //     };
-    //     loginVKUrl();
-    // }, []);
+    useEffect(() => {
+        async function loginVKUrl() {
+            props.spinner(true);
+            const authUser = new AuthUser();
+            await authUser.loginVK(vkURL)
+                .then(response => {
+                    if (response.data) {
+                        showAlert('Вход выполнен успешно!', 'success');
+                        storeUser.addMyUser(new User(authUser));
+                        return storeView.changeView("app", "main");
+                    }
+                });
+            props.spinner(false);
+        };loginVKUrl();
+    }, []);
 
     return (
         <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-            justifyContent: 'space-between',
+            display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'space-between',
         }}>
             <Box sx={{marginTop: '15%', textAlign: 'center', px: 2}}>
                 <img src={logo} style={{maxWidth: "60%"}} alt="Logo myIIT"/>
@@ -139,14 +118,13 @@ const Login = observer((props) => {
                                onChange={handleChange} error={errInput.password} helperText={errMessage.password}
                                type={inputData.showPassword ? 'text' : 'password'}
                                InputProps={{
-                                   endAdornment:
-                                       <InputAdornment position="end">
-                                           <IconButton aria-label="toggle password visibility"
-                                                       onClick={handleClickShowPassword}
-                                                       onMouseDown={handleMouseDownPassword}>{inputData.showPassword ?
-                                               <VisibilityOff/> : <Visibility/>}
-                                           </IconButton>
-                                       </InputAdornment>
+                                   endAdornment: <InputAdornment position="end">
+                                       <IconButton aria-label="toggle password visibility"
+                                                   onClick={handleClickShowPassword}
+                                                   onMouseDown={handleMouseDownPassword}>{inputData.showPassword ?
+                                           <VisibilityOff/> : <Visibility/>}
+                                       </IconButton>
+                                   </InputAdornment>
                                }}
                     />
                     <Button sx={{mt: 2}} fullWidth variant="contained" onClick={handleSubmit}>

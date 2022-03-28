@@ -2,10 +2,7 @@ import {useEffect, useState} from "react";
 import bridge from "@vkontakte/vk-bridge";
 
 import {
-    Alert,
-    Container,
-    Snackbar,
-    Stack
+    Alert, Container, Snackbar,
 } from "@mui/material";
 
 import Login from "./login/login";
@@ -21,8 +18,7 @@ import ResetPass from "./resetPass/resetPass";
 const Auth = observer((props) => {
 
     const [alert, setAlert] = useState({
-        show: false,
-        msg: null
+        show: false, msg: null
     });
     const showSnackBar = (msg, type) => {
         setAlert({
@@ -31,12 +27,10 @@ const Auth = observer((props) => {
         });
     };
     const closeSnackBar = (e, reason) => {
-        if (reason === 'clickaway')
-            return;
+        if (reason === 'clickaway') return;
 
         setAlert({
-            show: false,
-            msg: null
+            show: false, msg: null
         });
     };
 
@@ -62,22 +56,20 @@ const Auth = observer((props) => {
         getUserVK();
     }, []);
 
-    return (
-        <Container component="main" sx={{p: 0}}>
-            <View activeView={storeView.activeView.auth}>
-                <ScreenSpinner open={spinner}/>
-                <Login id="login" showAlert={showSnackBar} spinner={openSpinner}/>
-                <Terms id="terms" back={comeBackView}/>
-                <About id="about" back={comeBackView}/>
-                <ResetPass id="reset" back={comeBackView}/>
+    return (<Container component="main" sx={{p: 0, minHeight: "100vh"}}>
+        <View activeView={storeView.activeView.auth}>
+            <ScreenSpinner open={spinner}/>
+            <Login id="login" showAlert={showSnackBar} spinner={openSpinner}/>
+            <Terms id="terms" back={comeBackView}/>
+            <About id="about" back={comeBackView}/>
+            <ResetPass id="reset" back={comeBackView}/>
 
-                <Snackbar open={alert.show} autoHideDuration={3000} onClose={closeSnackBar}
-                          anchorOrigin={{vertical: 'bottom', horizontal: 'central'}}>
-                    {alert.msg}
-                </Snackbar>
-            </View>
-        </Container>
-    );
+            <Snackbar open={alert.show} autoHideDuration={3000} onClose={closeSnackBar}
+                      anchorOrigin={{vertical: 'bottom', horizontal: 'central'}}>
+                {alert.msg}
+            </Snackbar>
+        </View>
+    </Container>);
 });
 
 export default Auth;

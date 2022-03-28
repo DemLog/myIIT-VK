@@ -30,7 +30,7 @@ export const TabBar = observer((props) => {
     };
 
     return (
-        <Paper sx={{display: {xs: 'block', md: 'none'}, position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
+        <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
             <BottomNavigation value={storeTabs.activeTab} onChange={handleChange}>
                 <BottomNavigationAction
                     value="news"

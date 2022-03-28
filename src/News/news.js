@@ -1,46 +1,28 @@
 import React, {useState} from "react";
 
-import {
-    Box,
-    Tab,
-    Tabs
-} from "@mui/material";
+import {CssBaseline, Toolbar} from "@mui/material";
 
-import {HideOnScroll} from "../Components/HideOnScroll";
 import {View} from "../Components/View";
 import {Header} from "../Components/Header";
 import SystemNews from "./system/sysNews";
 
 import {observer} from "mobx-react-lite";
 import {ScreenSpinner} from "../Components/ScreenSpinner";
+import storeView from "../Store/storeView";
+import {TabBar} from "../Components/TabBar";
 
 const News = observer((props) => {
     const [spinner, openSpinner] = useState(false);
 
-    const [valueTab, setValueTab] = useState(0);
-    const handleChangeTab = (e, value) => {
-        setValueTab(value);
-    };
-
-    const showTabs = () => {
-        return (
-            <HideOnScroll direction="down">
-                <Tabs value={valueTab} onChange={handleChangeTab} aria-label="News tabs category" variant="fullWidth">
-                    {/*<ScreenSpinner open={spinner}/>*/}
-                    <Tab label="Лента" id="myiit" spinner={openSpinner}/>
-                    <Tab label="ИИТ ЧелГУ" id="iit_csu"/>
-                </Tabs>
-            </HideOnScroll>
-        );
-    }
-
     return (
-        <Box sx={{pb: {xs: 7, md: 0}, mt: 15}}>
-            <Header title="Новости" tabs={showTabs()}/>
-            <View activeView={valueTab}>
-                <SystemNews id={0}/>
+        <React.Fragment>
+            <CssBaseline/>
+            <Header title="Новости"/>
+            <Toolbar/>
+            <View activeView={storeView.activeView.news}>
+                <SystemNews id="system"/>
             </View>
-        </Box>
+        </React.Fragment>
     );
 });
 
