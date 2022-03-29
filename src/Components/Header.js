@@ -37,9 +37,9 @@ export const Header = (props) => {
 export const BackHeader = (props) => {
 
     return (
-        <AppBar position="static">
-            <Container>
-                <Toolbar sx={{p: 0}}>
+        <HideOnScroll direction="down" {...props}>
+            <AppBar>
+                <Toolbar>
                     <IconButton size="large" edge="start" color="inherit" aria-label="back" sx={{mr: 1}}
                                 onClick={props.backView}>
                         <ArrowBackIcon/>
@@ -48,7 +48,7 @@ export const BackHeader = (props) => {
                         {props.title}
                     </Typography>
                 </Toolbar>
-            </Container>
-        </AppBar>
+            </AppBar>
+        </HideOnScroll>
     )
 };

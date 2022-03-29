@@ -14,6 +14,7 @@ class StoreUser {
 
     addMyUser(userData) {
         this.myUser = userData;
+        console.log(this.myUser)
     };
 };
 

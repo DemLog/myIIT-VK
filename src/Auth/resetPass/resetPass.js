@@ -1,6 +1,7 @@
-import {Alert, Box, Button, Container, TextField, Typography} from "@mui/material";
+import {Alert, Box, Button, Container, TextField, Toolbar, Typography} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {BackHeader} from "../../Components/Header";
+import React from "react";
 
 const ResetPass = (props) => {
     return (
@@ -11,6 +12,7 @@ const ResetPass = (props) => {
             justifyContent: 'flex-start',
         }}>
             <BackHeader title="Сброс пароля" backView={props.back}/>
+            <Toolbar/>
             <Container component="main" sx={{p: 3}}>
                 <Alert variant="filled" severity="info">
                     Внимание: myIIT не имеет доступа к аккаунту вашего Moodle. Введенный вами пароль

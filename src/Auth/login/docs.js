@@ -7,13 +7,14 @@ import {
     ListItem,
     ListItemAvatar,
     ListItemButton,
-    ListItemText, ListSubheader
+    ListItemText, ListSubheader, Toolbar
 } from "@mui/material";
 
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
 import GroupIcon from '@mui/icons-material/Group';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import {BackHeader} from "../../Components/Header";
+import React from "react";
 
 export const Terms = (props) => {
     return (
@@ -24,6 +25,7 @@ export const Terms = (props) => {
             justifyContent: 'flex-start',
         }}>
             <BackHeader title="Условия использования" backView={props.back}/>
+            <Toolbar/>
             <Box sx={{overflowY: 'scroll', mx: 3}}>
                 <p align='center'><strong>Правила пользования Сайтом ВКонтакте</strong></p>
                 <p> Добро пожаловать на Сайт ВКонтакте, интернет-ресурс, который помогает Вам поддерживать связь с
@@ -161,10 +163,11 @@ export const About = (props) => {
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
-            height: '100%',
+            height: '100vh',
             justifyContent: 'flex-start',
         }}>
             <BackHeader title="О программе" backView={props.back}/>
+            <Toolbar/>
             <Box sx={{
                 overflowY: 'scroll',
                 display: 'flex',
