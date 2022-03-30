@@ -1,8 +1,8 @@
-import {useState} from "react";
-
 import {
     BottomNavigation,
-    BottomNavigationAction, Fab, Paper
+    BottomNavigationAction,
+    Fab,
+    Paper
 } from "@mui/material";
 import {styled} from '@mui/material/styles';
 
@@ -12,12 +12,10 @@ import AppsIcon from '@mui/icons-material/Apps';
 import TimerIcon from '@mui/icons-material/Timer';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-export const TabBar = (props) => {
-    const [value, setValue] = useState('news');
-    const handleChange = (e, value) => {
-        setValue(value);
-    };
+import {observer} from "mobx-react-lite";
+import storeTabs from "../Store/storeTabs";
 
+export const TabBar = observer((props) => {
     const StyledFab = styled(Fab)({
         position: 'absolute',
         zIndex: 1,
@@ -27,9 +25,13 @@ export const TabBar = (props) => {
         margin: '0 auto',
     });
 
+    const handleChange = (e, value) => {
+        storeTabs.changeTab(value);
+    };
+
     return (
-        <Paper sx={{display: {xs: 'block', md: 'none'}, position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
-            <BottomNavigation value={value} onChange={handleChange}>
+        <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
+            <BottomNavigation value={storeTabs.activeTab} onChange={handleChange}>
                 <BottomNavigationAction
                     value="news"
                     icon={<NewspaperIcon/>}
@@ -53,4 +55,4 @@ export const TabBar = (props) => {
             </BottomNavigation>
         </Paper>
     );
-}
+});

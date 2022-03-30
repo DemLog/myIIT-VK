@@ -1,44 +1,28 @@
 import React, {useState} from "react";
-import Auth from "./Auth/auth";
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {View} from "./Components/View";
-import {Header} from "./Components/Header";
+
+import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {CssBaseline} from "@mui/material";
-import {TabBar} from "./Components/TabBar";
 
-const App = () => {
-    const [activeView, setActiveView] = useState('tabbar');
-    const [themeUI, setThemeUI] = useState(null);
-    const tempTheme = createTheme({palette: {mode: 'light',},});
+import Auth from "./Auth/auth";
+import Main from "./Main/main";
+import {View} from "./Components/View";
 
-    const [user, setUser] = useState(null);
+import {observer} from "mobx-react-lite";
+import storeView from "./Store/storeView";
 
-    const changeTheme = (theme) => {
-        setThemeUI(createTheme({
-            palette: {
-                mode: theme,
-            },
-        }));
-    }
-
-    const goView = (e) => {
-        if (typeof e != 'string')
-            setActiveView(e.currentTarget.dataset.to);
-        setActiveView(e);
-    }
-
+const App = observer((props) => {
+    const [themeUI, setThemeUI] = useState(createTheme({palette: {mode: 'dark',},})); // переезд
 
     return (
-        <ThemeProvider theme={tempTheme}>
+        <ThemeProvider theme={themeUI}>
             <CssBaseline>
-                <View activeView={activeView}>
-                    <Auth id="auth" userData={setUser}/>
-                    <Header id="header" title="Мероприятия"/>
-                    <TabBar id="tabbar"/>
+                <View activeView={storeView.activeView.app}>
+                    <Auth id="auth"/>
+                    <Main id="main"/>
                 </View>
             </CssBaseline>
         </ThemeProvider>
     );
-}
+});
 
 export default App;

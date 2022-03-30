@@ -1,18 +1,25 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import bridge from "@vkontakte/vk-bridge";
 
-import {Alert, Container, Snackbar, Stack} from "@mui/material";
+import {
+    Alert, Container, Snackbar,
+} from "@mui/material";
 
-import {Login} from "./login/login";
+import Login from "./login/login";
+import {About, Terms} from "./login/docs";
 import {View} from "../Components/View";
+import {ScreenSpinner} from "../Components/ScreenSpinner";
 
-const Auth = (props) => {
-    const [activePanel, setActivePanel] = useState('login')
+import {observer} from "mobx-react-lite";
+import storeUser from "../Store/storeUser";
+import storeView from "../Store/storeView";
+import ResetPass from "./resetPass/resetPass";
+
+const Auth = observer((props) => {
 
     const [alert, setAlert] = useState({
-        show: false,
-        msg: null
+        show: false, msg: null
     });
-
     const showSnackBar = (msg, type) => {
         setAlert({
             show: true,
@@ -20,28 +27,49 @@ const Auth = (props) => {
         });
     };
     const closeSnackBar = (e, reason) => {
-        if (reason === 'clickaway')
-            return;
+        if (reason === 'clickaway') return;
 
         setAlert({
-            show: false,
-            msg: null
+            show: false, msg: null
         });
     };
 
-    return (
-        <Container component="main" maxWidth="xs">
-                <View activeView={activePanel}>
-                    <Login id="login" showAlert={showSnackBar} userData={props.userData}/>
+    const [spinner, openSpinner] = useState(false);
 
-                    <Stack spacing={2} sx={{width: '100%'}}>
-                        <Snackbar open={alert.show} autoHideDuration={5000} onClose={closeSnackBar}>
-                            {alert.msg}
-                        </Snackbar>
-                    </Stack>
-                </View>
-        </Container>
-    );
-};
+    const comeBackView = () => {
+        storeView.changeView("auth", "login")
+    };
+
+    useEffect(() => {
+        async function getUserVK() {
+            openSpinner(true);
+            await bridge.send('VKWebAppGetUserInfo')
+                .then(data => {
+                    storeUser.addVKUser(data);
+                })
+                .catch(error => {
+                    showSnackBar(error.error_data.error_reason, 'error');
+                });
+            openSpinner(false);
+        }
+
+        getUserVK();
+    }, []);
+
+    return (<Container component="main" sx={{p: 0, minHeight: "100vh"}}>
+        <View activeView={storeView.activeView.auth}>
+            <ScreenSpinner open={spinner}/>
+            <Login id="login" showAlert={showSnackBar} spinner={openSpinner}/>
+            <Terms id="terms" back={comeBackView}/>
+            <About id="about" back={comeBackView}/>
+            <ResetPass id="reset" back={comeBackView}/>
+
+            <Snackbar open={alert.show} autoHideDuration={3000} onClose={closeSnackBar}
+                      anchorOrigin={{vertical: 'bottom', horizontal: 'central'}}>
+                {alert.msg}
+            </Snackbar>
+        </View>
+    </Container>);
+});
 
 export default Auth;
