@@ -18,7 +18,7 @@ export const Header = (props) => {
 
     return (
         <HideOnScroll direction="down" {...props}>
-            <AppBar>
+            <AppBar sx={{boxShadow: 'none'}}>
                 <Toolbar>
                     <Box>
                         <img src={logo} style={{width: "45px", height: "45px"}} alt="Logo myIIT"/>
