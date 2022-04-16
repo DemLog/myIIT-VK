@@ -15,8 +15,8 @@ import {
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
 import {observer} from "mobx-react-lite";
-import storeNews from "../../Store/storeNews";
-import storeTabs from "../../Store/storeTabs";
+import storeNews from "../../../Store/storeNews";
+import storeTabs from "../../../Store/storeTabs";
 
 
 const SystemNews = observer((props) => {
