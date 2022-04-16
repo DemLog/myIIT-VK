@@ -20,6 +20,7 @@ class StoreTimeTable {
     async getTimeTableWeek() {
         const timeTable = await storeUser.myUser.method('timetable.getTimeTableWeek', null, {}, 'GET', 'v1');
         this.currentTT = timeTable.data;
+        console.log("СМОТРИ СЮДА",timeTable.data);
     }
 
     changeTab(e, name) {
