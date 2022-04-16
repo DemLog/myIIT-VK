@@ -1,6 +1,6 @@
 import {useEffect} from "react"
 
-import {Box} from "@mui/material";
+import {Container} from "@mui/material";
 
 import {observer} from "mobx-react-lite";
 import storeTimeTable from "../../../Store/storeTimeTable";
@@ -12,9 +12,9 @@ const TodayTT = observer((props) => {
         }, []);
 
         return (
-            <Box>
+            <Container>
                 Расписание сегодня
-            </Box>
+            </Container>
         );
     }
 );
