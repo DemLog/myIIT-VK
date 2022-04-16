@@ -8,6 +8,8 @@ class StoreTimeTable {
 
     activeTab = "today";
 
+    dataGotcha = false;
+
     constructor() {
         makeAutoObservable(this);
     }
@@ -15,12 +17,13 @@ class StoreTimeTable {
     async getTimeTableToday() {
         const timeTable = await storeUser.myUser.method('timetable.getTimeTableToday', null, {}, 'GET', 'v1');
         this.todayTT = timeTable.data;
+        this.dataGotcha = true;
     }
 
     async getTimeTableWeek() {
         const timeTable = await storeUser.myUser.method('timetable.getTimeTableWeek', null, {}, 'GET', 'v1');
         this.currentTT = timeTable.data;
-        console.log("СМОТРИ СЮДА",timeTable.data);
+        this.dataGotcha = true;
     }
 
     changeTab(e, name) {
