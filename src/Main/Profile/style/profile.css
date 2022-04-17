@@ -1,0 +1,17 @@
+.fb-timeline-img img {
+    width: 100%;
+    height:auto;
+    max-height: 15vh;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+}
+
+.profile-thumb img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    margin-top: -90px;
+    margin-left: 16px;
+    border: 3px solid white;
+}
