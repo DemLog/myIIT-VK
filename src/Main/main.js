@@ -10,6 +10,7 @@ import {TabBar} from "../Components/TabBar";
 import React from "react";
 import {Toolbar} from "@mui/material";
 import TimeTable from "./TimeTable/timeTable";
+import ProfileUser from "./Profile/profile";
 
 
 const Main = observer((props) => {
@@ -19,6 +20,7 @@ const Main = observer((props) => {
             <View id="main" activeView={storeTabs.activeTab}>
                 <News id="news"/>
                 <TimeTable id="timetable" />
+                <ProfileUser id="profile" />
             </View>
             <Toolbar/>
             <TabBar/>

@@ -49,7 +49,7 @@ export const TabBar = observer((props) => {
                     icon={<TimerIcon/>}
                 />
                 <BottomNavigationAction
-                    value="user"
+                    value="profile"
                     icon={<AccountCircleIcon/>}
                 />
             </BottomNavigation>
